@@ -1,19 +1,20 @@
 from selenium import webdriver
 from fixtures.session import SessionHelper
+from fixtures.project import ProjectHelper
 
 
 class Application:
-
     def __init__(self, browser, base_url):
-        if browser == "firefox":
+        if browser == 'firefox':
             self.wd = webdriver.Firefox()
-        elif browser == "chrome":
+        elif browser == 'chrome':
             self.wd = webdriver.Chrome()
-        elif browser == "edge":
-            self.wd = webdriver.Edge()
+        elif browser == 'ie':
+            self.wd = webdriver.Ie()
         else:
             raise ValueError("Unrecognized browser %s" % browser)
         self.session = SessionHelper(self)
+        self.project = ProjectHelper(self)
         self.base_url = base_url
 
     def is_valid(self):
@@ -23,7 +24,7 @@ class Application:
         except:
             return False
 
-    def open_home_page(self):
+    def load_login_page(self):
         wd = self.wd
         wd.get(self.base_url)
 
